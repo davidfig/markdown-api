@@ -41,7 +41,7 @@ function parseSource()
                 if (inComment.lastLine)
                 {
                     inComment.lines.push(line)
-                    comments.push(...inComment.lines, program.EOL)
+                    comments.push(...inComment.lines)
                     inComment = null
                 }
                 else if (line.trim().indexOf(COMMENT_END) !== -1)
@@ -58,7 +58,7 @@ function parseSource()
             {
                 if (line.trim().indexOf(COMMENT_START) !== -1)
                 {
-                    inComment = { lines: [line] }
+                    inComment = { lines: [program.EOL + line] }
                 }
             }
         }
@@ -89,7 +89,7 @@ function parseMarkdown()
                     {
                         results += comments[i] + (i !== comments.length - 1 ? program.EOL : '')
                     }
-                    results += '```'
+                    results += program.EOL + '```'
                     results += program.EOL + line + program.EOL
                 }
             }

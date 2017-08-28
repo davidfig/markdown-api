@@ -7,11 +7,11 @@ I wanted to create API markdown to document simple APIs that I release on github
 
 ## example
 
-See the docs/ directory 
+See the [generated README file](https://github.com/davidfig/markdown-api/blob/master/docs/README.results.md) in the [docs/ directory](https://github.com/davidfig/markdown-api/blob/master/docs/) 
 
 ## installation
 
-    npm i markdown-api
+    npm i markdown-api -g
 
 ## command-line example
 

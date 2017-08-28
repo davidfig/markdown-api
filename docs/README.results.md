@@ -5,7 +5,8 @@ This is a test readme
 This is where usage would go
 
 ## API
-```/**
+```
+/**
  * points in rectangle
  * @param {number} x
  * @param {number} y
@@ -13,7 +14,6 @@ This is where usage would go
  * @param {number} height
  */
 function rect(x, y, width, height)
-
 
 /**
  * points in arc
@@ -24,7 +24,6 @@ function rect(x, y, width, height)
  * @param {number} radius
  */
 function arc(x, y, start, end, radius)
-
 
 /**
  * Adjustable rounded rectangle
@@ -40,7 +39,6 @@ function arc(x, y, start, end, radius)
  */
 function roundedRectEach(x, y, width, height, radii)
 
-
 /**
  * rounded rectangle
  * @param {number} x
@@ -55,7 +53,6 @@ function roundedRectEach(x, y, width, height, radii)
  */
 function roundedRect(x, y, width, height, radius)
 
-
 /**
  * line with thickness
  * @param {number} x1
@@ -68,7 +65,6 @@ function roundedRect(x, y, width, height, radius)
  */
 function line(x1, y1, x2, y2, thickness)
 
-
 /**
  * circle
  * @param {number} x
@@ -76,7 +72,6 @@ function line(x1, y1, x2, y2, thickness)
  * @param {number} radius
  */
 function circle(x, y, radius)
-
 ```
 ## license  
 MIT License  
