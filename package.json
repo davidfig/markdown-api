@@ -1,0 +1,29 @@
+{
+  "name": "markdown-api",
+  "version": "0.0.1",
+  "description": "Add an API section to a markdown document for a simple project",
+  "main": "markdown-api.js",
+  "scripts": {
+    "test": "node markdown-api.js docs/test.js docs/README.md --out='docs/README.results.md'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidfig/markdown-api.git"
+  },
+  "keywords": [
+    "markdown",
+    "md",
+    "API",
+    "documentation",
+    "simple"
+  ],
+  "author": "David Figatner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidfig/markdown-api/issues"
+  },
+  "homepage": "https://github.com/davidfig/markdown-api#readme",
+  "dependencies": {
+    "commander": "^2.11.0"
+  }
+}
