@@ -1,0 +1,18 @@
+{
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Test 1",
+                "program": "${workspaceRoot}\\markdown-api.js",
+                "args": [
+                    "docs/test.js",
+                    "docs/README.md",
+                    "--out=docs/README.results.md",
+                    "--header"
+                ],
+                "cwd": "${workspaceRoot}"
+            }
+        ]
+    }

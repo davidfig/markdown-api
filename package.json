@@ -1,10 +1,12 @@
 {
     "name": "markdown-api",
-    "version": "0.0.6",
+    "version": "0.1.0",
     "description": "Add an API section to a markdown document for a simple project",
     "main": "markdown-api.js",
     "scripts": {
-        "test": "node markdown-api.js docs/test.js docs/README.md --out='docs/README.results.md'"
+        "test": "node markdown-api.js docs/test.js docs/README.md --out='docs/README.results.md'",
+        "test2": "node markdown-api.js docs/test.js docs/README.md --out='docs/README.results.md' --header && node markdown-api.js docs/test2.js docs/README.results.md --header --append",
+        "test3": "node markdown-api.js docs/test.js docs/README-2.md docs/test2.js --out='docs/README-2.results.md'"
     },
     "repository": {
         "type": "git",
