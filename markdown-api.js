@@ -40,7 +40,7 @@ function parseSource(filename)
     {
         comments.push(HEADER_MARKER + filename)
     }
-    let inComment
+    let inComment, first = true
     const lineReader = readline.createInterface({ input: fs.createReadStream(filename) })
     lineReader.on('line',
         function (line)
@@ -67,7 +67,8 @@ function parseSource(filename)
             {
                 if (line.trim().indexOf(COMMENT_START) !== -1)
                 {
-                    inComment = { lines: [program.EOL + line] }
+                    inComment = { lines: [(first ? '' : program.EOL) + line] }
+                    first = false
                 }
             }
         }
@@ -104,6 +105,11 @@ function outputComments(inAPI)
         }
         else
         {
+            if (!inside)
+            {
+                results += '```' + program.EOL
+                inside = true
+            }
             results += line + program.EOL
         }
     }

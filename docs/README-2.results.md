@@ -2,7 +2,8 @@
 Much simpler with no footer
 
 # API
-
+## docs/test.js
+```
 /**
  * points in rectangle
  * @param {number} x
@@ -69,7 +70,9 @@ function line(x1, y1, x2, y2, thickness)
  * @param {number} radius
  */
 function circle(x, y, radius)
-
+```
+## docs/test2.js
+```
 /**
  * class Animate.wait
  */
@@ -96,3 +99,4 @@ module.exports = class wait extends EventEmitter
      * @emits {reverse} when animation is reversed
      */
     constructor(object, options)
+```
