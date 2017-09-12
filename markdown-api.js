@@ -12,7 +12,7 @@ let outFile
 let sourceGlobs, sourceFilenames = [], markdownFilename, comments = []
 
 program
-    .version('0.1.0')
+    .version('0.2.3')
     .arguments('<markdown-file> <source-file...>')
     .description('add an API section to a markdown file from a simple javascript API documented using JSDoc. source-files may be glob patterns; each source file will be included only once')
     .action((markdown, source) => { markdownFilename = markdown; sourceGlobs = source })
