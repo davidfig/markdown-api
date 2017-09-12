@@ -7,8 +7,8 @@
                 "name": "Test 1",
                 "program": "${workspaceRoot}\\markdown-api.js",
                 "args": [
-                    "docs/test.js",
                     "docs/README.md",
+                    "docs/test.js",
                     "--out=docs/README.results.md",
                     "--header"
                 ],

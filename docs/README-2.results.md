@@ -2,7 +2,7 @@
 Much simpler with no footer
 
 # API
-```
+
 /**
  * points in rectangle
  * @param {number} x
@@ -69,4 +69,30 @@ function line(x1, y1, x2, y2, thickness)
  * @param {number} radius
  */
 function circle(x, y, radius)
-```
+
+/**
+ * class Animate.wait
+ */
+module.exports = class wait extends EventEmitter
+
+    /**
+     * @param {object|object[]} object or list of objects to animate
+     * @param {object} [options]
+     * @param {number} [options.wait=0] n milliseconds before starting animation (can also be used to pause animation for a length of time)
+     * @param {boolean} [options.pause] start the animation paused
+     * @param {(boolean|number)} [options.repeat] true: repeat animation forever n: repeat animation n times
+     * @param {(boolean|number)} [options.reverse] true: reverse animation (if combined with repeat, then pulse) n: reverse animation n times
+     * @param {(boolean|number)} [options.continue] true: continue animation with new starting values n: continue animation n times
+     * @param {number} [options.id] user-generated id (e.g., I use it to properly load animations when an object has multiple animations running)
+     * @param {boolean} [options.orphan] delete animation if .parent of object (or first object in list) is null
+     * @param {Function} [options.load] loads an animation using an .save() object note the * parameters below cannot be loaded and must be re-set
+     * @param {Function|string} [options.ease] function (or penner function name) from easing.js (see http://easings.net for examples)*
+     * @emits {done} animation expires
+     * @emits {cancel} animation is cancelled
+     * @emits {wait} each update during a wait
+     * @emits {first} first update when animation starts
+     * @emits {each} each update while animation is running
+     * @emits {loop} when animation is repeated
+     * @emits {reverse} when animation is reversed
+     */
+    constructor(object, options)

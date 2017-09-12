@@ -3,17 +3,19 @@
 const fs = require('fs')
 const readline = require('readline')
 const program = require('commander')
+const glob = require('glob')
 
+const HEADER_MARKER = '%%%filename%%%'
 const COMMENT_START = '/**'
 const COMMENT_END = '*/'
 let outFile
-let sourceFilename, markdownFilename, comments = []
+let sourceGlobs, sourceFilenames = [], markdownFilename, comments = []
 
 program
     .version('0.1.0')
-    .arguments('<source-file> <markdown-file>')
-    .description('add an API section to a markdown file from a simple javascript API documented using JSDoc')
-    .action((source, markdown) => { sourceFilename = source; markdownFilename = markdown })
+    .arguments('<markdown-file> <source-file...>')
+    .description('add an API section to a markdown file from a simple javascript API documented using JSDoc. source-files may be glob patterns; each source file will be included only once')
+    .action((markdown, source) => { markdownFilename = markdown; sourceGlobs = source })
     .option('-a, --API <string>', 'tag for API marking in MARKDOWN-FILE. defaults to "API"')
     .option('-e, --EOL <string>', 'end of line character for reqriting markdown file. defaults to "\\n"')
     .option('-o, --out <filename>', 'filename to write the results. defaults to overriding original markdown file')
@@ -26,16 +28,20 @@ program.EOL = program.EOL || '\n'
 
 outFile = program.out || markdownFilename
 
-if (!sourceFilename || !markdownFilename)
+if (!sourceGlobs || !sourceGlobs.length || !markdownFilename)
 {
     program.outputHelp()
     process.exit(1)
 }
 
-function parseSource()
+function parseSource(filename)
 {
+    if (program.header)
+    {
+        comments.push(HEADER_MARKER + filename)
+    }
     let inComment
-    const lineReader = readline.createInterface({ input: fs.createReadStream(sourceFilename) })
+    const lineReader = readline.createInterface({ input: fs.createReadStream(filename) })
     lineReader.on('line',
         function (line)
         {
@@ -69,9 +75,43 @@ function parseSource()
     lineReader.on('close',
         function ()
         {
-            parseMarkdown()
+            parseFile()
         }
     )
+}
+
+function outputComments(inAPI)
+{
+    let results = ''
+    let inside = false
+    for (let i = 0; i < comments.length; i++)
+    {
+        const line = comments[i]
+        if (line.indexOf(HEADER_MARKER) !== -1)
+        {
+            if (inside)
+            {
+                results += '```' + program.EOL
+            }
+            const filename = line.replace(HEADER_MARKER, '')
+            for (let i = 0; i < inAPI + 1; i++)
+            {
+                results += '#'
+            }
+            results += ' ' + filename + program.EOL
+            results += '```' + program.EOL
+            inside = true
+        }
+        else
+        {
+            results += line + program.EOL
+        }
+    }
+    if (inside)
+    {
+        results += '```' + program.EOL
+    }
+    return results
 }
 
 function parseMarkdown()
@@ -86,21 +126,7 @@ function parseMarkdown()
             {
                 if (line[0] === '#' && line[inAPI] !== '#')
                 {
-                    if (program.header)
-                    {
-                        for (let i = 0; i < inAPI + 1; i++)
-                        {
-                            results += '#'
-                        }
-                        results += ' ' + sourceFilename + program.EOL
-                    }
-                    results += '```'
-                    for (let i = 0; i < comments.length; i++)
-                    {
-                        results += comments[i] + (i !== comments.length - 1 ? program.EOL : '')
-                    }
-                    results += program.EOL + '```'
-                    results += program.EOL + line + program.EOL
+                    results += outputComments(inAPI)
                     inAPI = false
                 }
                 else if (program.append)
@@ -127,25 +153,36 @@ function parseMarkdown()
         {
             if (inAPI)
             {
-                if (program.header)
-                {
-                    for (let i = 0; i < inAPI + 1; i++)
-                    {
-                        results += '#'
-                    }
-                    results += ' ' + sourceFilename + program.EOL
-                }
-                results += '```'
-                for (let i = 0; i < comments.length; i++)
-                {
-                    results += comments[i] + (i !== comments.length - 1 ? program.EOL : '')
-                }
-                results += program.EOL + '```'
+                results += outputComments(inAPI)
             }
             fs.writeFileSync(outFile, results)
-            console.log('Wrote ' + sourceFilename + ' API documentation to ' + outFile + '.')
+            console.log('Wrote API documentation to ' + outFile + '.')
         }
     )
 }
 
-parseSource()
+function parseFile()
+{
+    if (sourceFilenames.length)
+    {
+        parseSource(sourceFilenames.shift())
+    }
+    else
+    {
+        parseMarkdown()
+    }
+}
+
+for (let filename of sourceGlobs)
+{
+    const files = glob.sync(filename)
+    for (let file of files)
+    {
+        if (sourceFilenames.indexOf(file) === -1)
+        {
+            sourceFilenames.push(file)
+        }
+    }
+}
+
+parseFile()

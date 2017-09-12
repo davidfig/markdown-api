@@ -20,9 +20,9 @@ See the [generated README file](https://github.com/davidfig/markdown-api/blob/ma
 
     $ markdown-api --help
 
-    Usage: markdown-api [options] <source-file> <markdown-file>
+    Usage: markdown-api [options] <markdown-file> <source-files...>
 
-    add an API section to a markdown file from a simple javascript API documented using JSDoc
+    add an API section to a markdown file from a simple javascript API documented using JSDoc. source-files may be glob patterns; each source file will be included only once 
 
     Options:
 
