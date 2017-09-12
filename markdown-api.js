@@ -133,6 +133,7 @@ function parseMarkdown()
                 if (line[0] === '#' && line[inAPI] !== '#')
                 {
                     results += outputComments(inAPI)
+                    results += line + program.EOL
                     inAPI = false
                 }
                 else if (program.append)
