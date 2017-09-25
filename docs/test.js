@@ -42,6 +42,7 @@ function arc(x, y, start, end, radius)
 
 /**
  * Adjustable rounded rectangle
+ * @private
  * @param {number} x
  * @param {number} y
  * @param {number} width

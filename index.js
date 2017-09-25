@@ -20,7 +20,8 @@ program
     .option('-e, --EOL <string>', 'end of line character for reqriting markdown file. defaults to "\\n"')
     .option('-o, --out <filename>', 'filename to write the results. defaults to overriding original markdown file')
     .option('-p, --append', 'append to the end of the API section instead of deleting the current API section')
-    .option('-h --header', 'include filename as a heading at the start of the section')
+    .option('-h, --header', 'include filename as a heading at the start of the section')
+    .option('-i, --private', 'include @private tagged blocks')
     .parse(process.argv)
 
 program.API = program.API || 'API'
@@ -60,7 +61,14 @@ function parseSource(filename)
                 }
                 else
                 {
-                    inComment.lines.push(line)
+                    if (!program.private && line.indexOf('@private') !== -1)
+                    {
+                        inComment = null
+                    }
+                    else
+                    {
+                        inComment.lines.push(line)
+                    }
                 }
             }
             else

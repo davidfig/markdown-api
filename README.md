@@ -3,7 +3,7 @@ add an API section to a markdown file from a simple javascript API documented us
 
 ## rationale
 
-I wanted to create API markdown to document simple APIs that I release on github. The source file needs to include JSDoc commenting. The program simply pastes the JSDoc header and function name into the markdown file (usually README.md) at the API tag. It does no fancy parsing of the source file.
+I wanted to create a way to document simple APIs that I release on github. The source file(s) need to include JSDoc commenting. The program simply pastes the JSDoc header and function name into the markdown file (usually README.md) at the API tag. It does no fancy parsing of the source file but instead includes one line after the comment block.
 
 ## example
 
@@ -33,6 +33,7 @@ See the [generated README file](https://github.com/davidfig/markdown-api/blob/ma
         -h, --help            output usage information    
         -p, --append          append to the end of the API section instead of deleting the current API section
         -h, --header          include filename as a heading at the start of the API section
+        -i, --private         include @private tagged blocks
 
 ## License  
 MIT License  
