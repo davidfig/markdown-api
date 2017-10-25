@@ -35,6 +35,24 @@ See the [generated README file](https://github.com/davidfig/markdown-api/blob/ma
         -h, --header          include filename as a heading at the start of the API section
         -i, --private         include @private tagged blocks
 
+## API
+```js
+/**
+ * replace API section in markdown file (usually README.md)
+ *
+ * @param {string} markdown filename and path
+ * @param {string[]} source files or globs
+ * @param {options} [options]
+ * @param {string} [options.API=API] tag for API marking in markdown file
+ * @param {string} [options.EOL=\n] end of line character for writing markdown file
+ * @param {string} [options.out=markdown] filename to write the results
+ * @param {boolean} [options.append] append to the end of the API section instead of deleting the current API section
+ * @param {boolean} [options.header] include filename as a heading at the start of the section
+ * @param {boolean} [options.private] include private tagged blocks
+ * @param {string} [options.language=js] use this language tag for highlighting code blocks
+ */
+function markdown(markdown, source, options)
+```
 ## License  
 MIT License  
 (c) 2017 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)

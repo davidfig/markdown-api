@@ -4,11 +4,13 @@
     "description": "Add an API section to a markdown document for a simple project",
     "main": "index.js",
     "scripts": {
-        "test": "node index.js docs/README.md docs/test.js --out='docs/README.results.md' --header",
-        "test2": "node index.js docs/README.md docs/test.js docs/test2.js --out='docs/README.results.md' --header",
-        "test3": "node index.js docs/README-2.md docs/test.js docs/test2.js --out='docs/README-2.results.md'",
-        "test4": "node index.js docs/README-2.md docs/test.js docs/**.js --out='docs/README-2.results.md' --header",
-        "test5": "node index.js docs/README.md docs/test.js docs/**.js --out='docs/README.results.md' --header --private"
+        "test": "./markdown-api.js docs/README.md docs/test.js --out='docs/README.results.md' --header",
+        "test2": "./markdown-api.js docs/README.md docs/test.js docs/test2.js --out='docs/README.results.md' --header",
+        "test3": "./markdown-api.js docs/README-2.md docs/test.js docs/test2.js --out='docs/README-2.results.md'",
+        "test4": "./markdown-api.js docs/README-2.md docs/test.js docs/**.js --out='docs/README-2.results.md' --header",
+        "test5": "./markdown-api.js docs/README.md docs/test.js docs/**.js --out='docs/README.results.md' --header --private",
+        "docs": "./markdown-api.js README.md index.js",
+        "prepublishOnly": "yarn docs"
     },
     "repository": {
         "type": "git",
@@ -22,7 +24,7 @@
         "simple"
     ],
     "bin": {
-        "markdown-api": "./index.js"
+        "markdown-api": "./markdown-api.js"
     },
     "author": "David Figatner",
     "license": "MIT",

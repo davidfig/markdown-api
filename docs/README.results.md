@@ -6,7 +6,7 @@ This is where usage would go
 
 ## API
 ### docs/test.js
-```
+```js
 /**
  * points in rectangle
  * @param {number} x

@@ -1,39 +1,12 @@
-#!/usr/bin/env node
-
 const fs = require('fs')
 const readline = require('readline')
-const program = require('commander')
 const glob = require('glob')
 
 const HEADER_MARKER = '%%%filename%%%'
-const COMMENT_START = '/**'
+const COMMENT_START = '/*' + '*'
 const COMMENT_END = '*/'
-let outFile
-let sourceGlobs, sourceFilenames = [], markdownFilename, comments = []
-
-program
-    .version('0.2.3')
-    .arguments('<markdown-file> <source-file...>')
-    .description('add an API section to a markdown file from a simple javascript API documented using JSDoc. source-files may be glob patterns; each source file will be included only once')
-    .action((markdown, source) => { markdownFilename = markdown; sourceGlobs = source })
-    .option('-a, --API <string>', 'tag for API marking in MARKDOWN-FILE. defaults to "API"')
-    .option('-e, --EOL <string>', 'end of line character for reqriting markdown file. defaults to "\\n"')
-    .option('-o, --out <filename>', 'filename to write the results. defaults to overriding original markdown file')
-    .option('-p, --append', 'append to the end of the API section instead of deleting the current API section')
-    .option('-h, --header', 'include filename as a heading at the start of the section')
-    .option('-i, --private', 'include @private tagged blocks')
-    .parse(process.argv)
-
-program.API = program.API || 'API'
-program.EOL = program.EOL || '\n'
-
-outFile = program.out || markdownFilename
-
-if (!sourceGlobs || !sourceGlobs.length || !markdownFilename)
-{
-    program.outputHelp()
-    process.exit(1)
-}
+let program
+let sourceFilenames = [], markdownFilename, comments = []
 
 function parseSource(filename)
 {
@@ -75,7 +48,7 @@ function parseSource(filename)
             {
                 if (line.trim().indexOf(COMMENT_START) !== -1)
                 {
-                    inComment = { lines: [(first ? '' : program.EOL) + line] }
+                    inComment = { lines: [(first ? '' : program.EOL) + line]  }
                     first = false
                 }
             }
@@ -108,14 +81,14 @@ function outputComments(inAPI)
                 results += '#'
             }
             results += ' ' + filename + program.EOL
-            results += '```' + program.EOL
+            results += '```' + program.language + program.EOL
             inside = true
         }
         else
         {
             if (!inside)
             {
-                results += '```' + program.EOL
+                results += '```' + program.language + program.EOL
                 inside = true
             }
             results += line + program.EOL
@@ -170,8 +143,8 @@ function parseMarkdown()
             {
                 results += outputComments(inAPI)
             }
-            fs.writeFileSync(outFile, results)
-            console.log('Wrote API documentation to ' + outFile + '.')
+            fs.writeFileSync(program.out, results)
+            console.log('Wrote API documentation to ' + program.out + '.')
         }
     )
 }
@@ -188,16 +161,40 @@ function parseFile()
     }
 }
 
-for (let filename of sourceGlobs)
+/**
+ * replace API section in markdown file (usually README.md)
+ * @param {string} markdown filename and path
+ * @param {string[]} source files or globs
+ * @param {options} [options]
+ * @param {string} [options.API=API] tag for API marking in markdown file
+ * @param {string} [options.EOL=\n] end of line character for writing markdown file
+ * @param {string} [options.out=markdown] filename to write the results
+ * @param {boolean} [options.append] append to the end of the API section instead of deleting the current API section
+ * @param {boolean} [options.header] include filename as a heading at the start of the section
+ * @param {boolean} [options.private] include private tagged blocks
+ * @param {string} [options.language=js] use this language tag for highlighting code blocks
+ */
+function markdown(markdown, source, options)
 {
-    const files = glob.sync(filename)
-    for (let file of files)
+    for (let filename of source)
     {
-        if (sourceFilenames.indexOf(file) === -1)
+        const files = glob.sync(filename)
+        for (let file of files)
         {
-            sourceFilenames.push(file)
+            if (sourceFilenames.indexOf(file) === -1)
+            {
+                sourceFilenames.push(file)
+            }
         }
     }
+
+    markdownFilename = markdown
+    program = options
+    program.API = program.API || 'API'
+    program.EOL = program.EOL || '\n'
+    program.language = program.language || 'js'
+    program.out = program.out || markdownFilename
+    parseFile()
 }
 
-parseFile()
+module.exports = markdown
