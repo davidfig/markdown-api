@@ -39,7 +39,6 @@ See the [generated README file](https://github.com/davidfig/markdown-api/blob/ma
 ```js
 /**
  * replace API section in markdown file (usually README.md)
- *
  * @param {string} markdown filename and path
  * @param {string[]} source files or globs
  * @param {options} [options]
