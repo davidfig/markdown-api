@@ -2,11 +2,12 @@
 
 const program = require('commander')
 const markdown = require('.')
+const pack = require('./package.json')
 
 let markdownFilename, sourceGlobs
 
 program
-    .version('0.2.3')
+    .version(pack.version)
     .arguments('<markdown-file> <source-file...>')
     .description('add an API section to a markdown file from a simple javascript API documented using JSDoc. source-files may be glob patterns; each source file will be included only once')
     .action((markdown, source) => { markdownFilename = markdown; sourceGlobs = source })
