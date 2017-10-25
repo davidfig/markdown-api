@@ -1,6 +1,6 @@
 {
     "name": "markdown-api",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Add an API section to a markdown document for a simple project",
     "main": "index.js",
     "scripts": {
