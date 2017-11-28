@@ -23,7 +23,7 @@ program
 if (!sourceGlobs || !sourceGlobs.length || !markdownFilename)
 {
     program.outputHelp()
-    process.exit(1)
+    process.exit(0)
 }
 
 markdown(markdownFilename, sourceGlobs, program)

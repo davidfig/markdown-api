@@ -5,7 +5,6 @@ This is a test readme
 This is where usage would go
 
 ## API
-### docs/test.js
 ```js
 /**
  * points in rectangle
@@ -25,21 +24,6 @@ function rect(x, y, width, height)
  * @param {number} radius
  */
 function arc(x, y, start, end, radius)
-
-/**
- * Adjustable rounded rectangle
- * @private
- * @param {number} x
- * @param {number} y
- * @param {number} width
- * @param {number} height
- * @param {object} radii
- * @param {number} [radii.topLeft]
- * @param {number} [radii.topRight]
- * @param {number} [radii.bottomLeft]
- * @param {number} [radii.bottomRight]
- */
-function roundedRectEach(x, y, width, height, radii)
 
 /**
  * rounded rectangle
@@ -75,9 +59,6 @@ function line(x1, y1, x2, y2, thickness)
  */
 function circle(x, y, radius)
 
-```
-### docs/test2.js
-```js
 /**
  * class Animate.wait
  */

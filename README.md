@@ -51,6 +51,7 @@ See the [generated README file](https://github.com/davidfig/markdown-api/blob/ma
  * @param {string} [options.language=js] use this language tag for highlighting code blocks
  */
 function markdown(markdown, source, options)
+
 ```
 ## License  
 MIT License  

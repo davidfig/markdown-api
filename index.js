@@ -57,6 +57,7 @@ function parseSource(filename)
     lineReader.on('close',
         function ()
         {
+            comments.push('')
             parseFile()
         }
     )
@@ -149,11 +150,11 @@ function parseMarkdown()
     )
 }
 
-function parseFile()
+function parseFile(first)
 {
     if (sourceFilenames.length)
     {
-        parseSource(sourceFilenames.shift())
+        parseSource(sourceFilenames.shift(), first === true)
     }
     else
     {
@@ -194,7 +195,7 @@ function markdown(markdown, source, options)
     program.EOL = program.EOL || '\n'
     program.language = program.language || 'js'
     program.out = program.out || markdownFilename
-    parseFile()
+    parseFile(true)
 }
 
 module.exports = markdown
